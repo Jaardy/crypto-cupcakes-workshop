@@ -1,20 +1,22 @@
+require('dotenv').config({ path: `./config/.env.${process.env.NODE_ENV}` });
 const cors = require('cors');
 const express = require('express');
 const app = express();
-const { auth, requiresAuth } = require('express-openid-connect');
-const { authConfig } = require('./config/authConfig');
+const oidcAuth = require('./middleware/oidcAuth');
+const oidcRequiresAuth = require('./middleware/oidcRequiresAuth');
+
 const { checkRegisteredUser } = require('./middleware/checkRegisteredUser');
 
 // middleware
 app.use(cors());
-app.use(auth(authConfig), checkRegisteredUser);
+app.use(oidcAuth, checkRegisteredUser);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/cupcakes', requiresAuth(), require('./routes/cupcakes'));
+app.use('/cupcakes', oidcRequiresAuth, require('./routes/cupcakes'));
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
   res.send('Home');
 });
 
