@@ -1,24 +1,10 @@
 const { describe, expect, it } = require('@jest/globals');
 const request = require('supertest');
 const app = require('../index');
-const { oidcAuth } = require('../middleware/oidcAuth');
-const { oidcRequiresAuth } = require('../middleware/oidcRequiresAuth');
+
 const { User, Cupcake } = require('../models');
-jest.mock('../middleware/oidcAuth', () =>
-  jest.fn((req, res, next) => {
-    req.oidc = {
-      user: {
-        nickname: 'tester',
-        name: 'also tester',
-        email: '123@fake.com',
-      },
-    };
-
-    next();
-  })
-);
-jest.mock('../middleware/oidcRequiresAuth', () => jest.fn((_req, _res, next) => next()));
-
+jest.mock('../middleware/oidcAuth');
+jest.mock('../middleware/oidcRequiresAuth');
 describe('GET /', () => {
   beforeEach(async () => {
     await User.sync({ force: true });
@@ -40,7 +26,6 @@ describe('GET /', () => {
 describe('GET /cupcakes', () => {
   beforeAll(async () => {
     const { cupcakes } = require('../utils/seedData');
-    console.log(cupcakes);
     await Cupcake.sync({ force: true });
     await Cupcake.bulkCreate(cupcakes);
   });
