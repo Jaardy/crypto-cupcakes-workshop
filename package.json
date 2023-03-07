@@ -5,7 +5,7 @@
   "scripts": {
     "seed": "node db/seed.js",
     "start": "node server.js",
-    "start-dev": "cross-env NODE_ENV=development nodemon server.js",
+    "start-dev": "cross-env NODE_ENV=development nodemon src/server.js",
     "test": "cross-env NODE_ENV=testing jest"
   },
   "author": "Multiverse",
