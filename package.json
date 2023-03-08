@@ -5,7 +5,7 @@
   "scripts": {
     "seed": "node db/seed.js",
     "start": "node server.js",
-    "start-dev": "cross-env NODE_ENV=development nodemon server.js",
+    "start-dev": "cross-env NODE_ENV=development nodemon src/server.js",
     "test": "cross-env NODE_ENV=testing jest"
   },
   "author": "Multiverse",
@@ -16,7 +16,7 @@
     "express": "4.18.1",
     "express-openid-connect": "^2.9.0",
     "sequelize": "^6.29.0",
-    "sqlite3": "5.0.8"
+    "sqlite3": "^5.0.11"
   },
   "devDependencies": {
     "jest": "^29.4.3",
